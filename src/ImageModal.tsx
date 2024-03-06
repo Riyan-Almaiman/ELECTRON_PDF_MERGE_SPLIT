@@ -11,7 +11,6 @@ const PDFModal = ({ isOpen, onClose, image }: PDFModalProps) => {
 
   return (
     <Modal 
-      theme={{root:{show:{on:"flex bg-transparent  "}}}}
       dismissible
       show={isOpen} 
       dir='ltr'

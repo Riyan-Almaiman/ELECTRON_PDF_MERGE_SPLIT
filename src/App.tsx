@@ -11,7 +11,7 @@ const NoContentPlaceholder = () => {
     <div className="flex flex-col items-center justify-center h-full  text-center ">
       <HiOutlineArrowNarrowRight className="text-9xl text-purple-500 mb-8" />
       <h2 className="text-4xl font-bold">لم يتم اختيار صفحات</h2>
-      <p className="mt-6 text-2xl text-white">
+      <p className="mt-6 text-2xl text-black">
         يرجى اختيار صفحات من الشريط الجانبي لعرض محتوياته.
       </p>
     </div>
@@ -66,27 +66,9 @@ function App() {
         />
       </div>
       <div className="flex-grow flex flex-col mt-8 mb-4 mr-4 ml-4">
-        <div className="flex flex-row justify-between items-end">
-          <div className=" mb-2   ">
-            <Button
-              size={"xl"}
-              gradientDuoTone="purpleToBlue"
-              onClick={() => handleCreatePdfClick()}
-              disabled={selectedPageIDs.length === 0}
-            >
-              <HiDownload className="h-5 w-5" />
-              انشاء PDF جديد من الصفحات
-            </Button>
-          </div>
-
-          {/* <div >
-              <img className=" w-32 mb-8 "src="logo.png"></img>
-            
-          </div> */}
-        </div>
-
-        <div className="flex flex-col  rounded-lg border-2 border-white shadow-lg overflow-auto flex-grow">
-          <div className="m-4 flex ">
+        {/* <NavBar/> */}
+        <div className="flex flex-col  rounded-lg bg-blue-100 shadow-lg overflow-auto flex-grow">
+          <div className="m-4 flex justify-between ">
             <Button
               color="failure"
               className="bg-transparent  border border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
@@ -95,6 +77,17 @@ function App() {
             >
               <HiTrash className="h-5 w-5" />
             </Button>
+            <div className="   ">
+            <Button
+              size={"lg"}
+              gradientDuoTone="purpleToBlue"
+              onClick={() => handleCreatePdfClick()}
+              disabled={selectedPageIDs.length === 0}
+            >
+              <HiDownload className="h-5 w-5" />
+              انشاء PDF جديد من الصفحات
+            </Button>
+          </div>
           </div>
 
            {selectedPageIDs.length===0 ? (

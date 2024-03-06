@@ -48,7 +48,7 @@ const MainViewer = ({ pdfPages }: PDFViewerProps) => {
     return orderedSelectedPages.map((page, index) => (
       <div
         key={page.pageID}
-        className="relative group overflow-hidden bg-transparent rounded-lg border-2 flex justify-center items-center"
+        className="relative group overflow-hidden bg-transparent rounded-lg border-2 border-black flex justify-center items-center"
         style={{ height: 'auto', width: '100%' }}
       >
         <div className="flex flex-col justify-center items-center">
