@@ -1,6 +1,7 @@
 import  { app, BrowserWindow } from 'electron'
 import path from 'node:path'
-
+import {ipcMain, dialog}  from 'electron';
+import fs from 'fs';
 // The built directory structure
 //
 // ├─┬─┬ dist
@@ -27,7 +28,7 @@ function createWindow() {
     icon: path.join(process.env.VITE_PUBLIC,"../public/taqniaets_logo.jpg"),
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: true,
+      contextIsolation: false,
       preload: path.join(__dirname, 'preload.js'),
     },
   })
@@ -54,7 +55,24 @@ app.on('window-all-closed', () => {
   }
 })
 
+ipcMain.on('save-pdf', (_event, pdfBytes) => {
+  dialog.showSaveDialog({
+    title: 'Save PDF',
+    defaultPath: 'selected-pages.pdf',
+    filters: [{ name: 'PDF Files', extensions: ['pdf'] }]
+  }).then((savePath) => {
+    if (!savePath.canceled && savePath.filePath) {
+      fs.writeFile(savePath.filePath, Buffer.from(pdfBytes), (err) => {
+        if (err) {
+          console.log('Error saving PDF:', err);
+        } else {
+          console.log('PDF saved successfully!');
+        }
+      });
+    }
+  });
 
+});
 app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.

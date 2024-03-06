@@ -3,6 +3,7 @@ import { PDFDocument } from "pdf-lib";
 import { v4 as uuidv4 } from "uuid";
 const src = new URL('pdfjs-dist/build/pdf.worker.mjs', import.meta.url)
 pdfjsLib.GlobalWorkerOptions.workerSrc = src.toString()
+import { ipcRenderer } from 'electron';
 
 
 export type Page = {
@@ -109,13 +110,15 @@ export const createPdf = async (selectedPageIDs: string[]): Promise<void> => {
 
   // Save the new PDF and trigger the download
   const pdfBytes = await newPdfDoc.save();
-  const blob = new Blob([pdfBytes], { type: "application/pdf" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "selected-pages.pdf";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  ipcRenderer.send('save-pdf', pdfBytes);
+
+  // const blob = new Blob([pdfBytes], { type: "application/pdf" });
+  // const url = URL.createObjectURL(blob);
+  // const a = document.createElement("a");
+  // a.href = url;
+  // a.download = "selected-pages.pdf";
+  // document.body.appendChild(a);
+  // a.click();
+  // document.body.removeChild(a);
+  // URL.revokeObjectURL(url);
 };
